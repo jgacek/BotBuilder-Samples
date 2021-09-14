@@ -4,8 +4,8 @@
 // Import required packages
 const path = require('path');
 const restify = require('restify');
-const { ComponentRegistration } = require('botbuilder-core');
-const { AdaptiveComponentRegistration } = require('botbuilder-dialogs-adaptive');
+const { ServiceCollection, noOpConfiguration } = require('botbuilder-dialogs-adaptive-runtime-core');
+const { AdaptiveBotComponent } = require('botbuilder-dialogs-adaptive');
 
 const { ResourceExplorer } = require('botbuilder-dialogs-declarative');
 
@@ -22,8 +22,15 @@ const ENV_FILE = path.join(__dirname, '.env');
 require('dotenv').config({ path: ENV_FILE });
 
 // Set up resource explorer
-ComponentRegistration.add(new AdaptiveComponentRegistration());
-const resourceExplorer = new ResourceExplorer().addFolder(__dirname, true, true);
+const services = new ServiceCollection({
+    declarativeTypes: []
+});
+
+new AdaptiveBotComponent().configureServices(services, noOpConfiguration);
+
+const declarativeTypes = services.mustMakeInstance('declarativeTypes');
+
+const resourceExplorer = new ResourceExplorer({ declarativeTypes }).addFolder(__dirname, true, true);
 
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about adapters.

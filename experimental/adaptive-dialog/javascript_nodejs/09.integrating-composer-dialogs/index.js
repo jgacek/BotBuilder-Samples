@@ -6,7 +6,7 @@ const path = require('path');
 const restify = require('restify');
 
 const { ResourceExplorer } = require('botbuilder-dialogs-declarative');
-const { AdaptiveDialogComponentRegistration, LanguageGeneratorMiddleWare } = require('botbuilder-dialogs-adaptive');
+const { AdaptiveDialogComponentRegistration } = require('botbuilder-dialogs-adaptive');
 
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
@@ -54,7 +54,6 @@ const onTurnErrorHandler = async (context, error) => {
 
 // Catch-all for errors.
 adapter.onTurnError = onTurnErrorHandler;
-adapter.use(new LanguageGeneratorMiddleWare(resourceExplorer));
 
 // Define a state store for your bot. See https://aka.ms/about-bot-state to learn more about using MemoryStorage.
 // A bot requires a state store to persist the dialog and user state between messages.
@@ -64,7 +63,7 @@ const userState = new UserState(memoryStorage);
 
 // Create the main dialog.
 const dialog = new RootDialog(userState, resourceExplorer);
-const bot = new DialogBot(conversationState, userState, dialog);
+const bot = new DialogBot(conversationState, userState, dialog, resourceExplorer);
 
 // Create HTTP server.
 const server = restify.createServer();

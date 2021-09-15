@@ -1,0 +1,32 @@
+[import](common.lg)
+
+# SendActivity_jc9xSG()
+[Activity
+    Text = Lets check the weather.
+]
+
+# TextInput_Prompt_LX77yL()
+[Activity
+    Text = What's your postal code?
+]
+
+# TextInput_UnrecognizedPrompt_LX77yL()
+[Activity
+    Text = Sorry, I do not understand '${this.value}'. Please specify a 5 digit postal code in the format 12345.
+]
+
+# TextInput_InvalidPrompt_LX77yL()
+[Activity
+    Text = Sorry, '${this.value}' is not valid. I'm looking for a 5 digit number as postal code. Please specify a 5 digit postal code in the format 12345.
+]
+
+# SendActivity_SyqGXs()
+[Activity
+    Text = The weather is ${dialog.fahrenheit}F or ${dialog.celsius}C and ${dialog.weather}.
+    AttachmentLayout = list
+]
+
+# SendActivity_bVDHRe()
+[Activity
+    Text = Something went wrong: ${dialog.api_response.content.message}.
+]
